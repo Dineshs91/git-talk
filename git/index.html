@@ -32,7 +32,143 @@
 					<i class="fa fa-github" aria-hidden="true"></i> Github - dineshs91<br/>
 					<i class="fa fa-twitter" aria-hidden="true"></i> Twitter - sdinesh91<br/>
 				</section>
-				<section>Slide 2</section>
+				<section>
+				    <section>
+						<h3>Update local copy of the source code</h3>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							```
+							git pull origin master
+							```
+
+							Drawbacks:
+
+							Creates a commit for every update done, which should not be there. No one is interested in knowing when
+							the other person has updated his local branch. 
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							```
+							git pull --rebase origin master
+							```
+
+							This won't create a merge commit, thereby ensuring we have a clear commit history.
+						</textarea>
+					</section>
+				</section>
+
+				<section>
+				    <section>
+				        <h3>Recover a dropped stash</h3>
+				    </section>
+				    <section data-markdown>
+				    	<textarea data-template>
+					        ```
+					        git stash apply $stash_hash
+					        ```
+
+					        When a stash is dropped, git prints out the hash of that stash to stdout.
+					    </textarea>
+				    </section>
+				</section>
+
+				<section>
+				    <section>
+				        <h3>Committed a file to a different branch by mistake</h3>
+
+				        You committed a file to a different branch (release) which was supposed to be committed to another branch (hotfix).
+				    </section>
+				    <section data-markdown>
+				    	<textarea data-template>
+                            Get the sha of the commit.
+                            ```
+                            git checkout release
+                            git log
+                            ```
+
+                            Get the commit into hotfix branch.
+
+                            ```
+                            git checkout hotfix
+                            git cherry-pick <sha>
+                            ```
+
+                            Remove the commit from release branch.
+
+                            ```
+                            git checkout release
+                            git reset --hard <sha>
+                            ```
+					    </textarea>
+				    </section>
+				</section>
+
+                <section>
+                    <section>
+                        <h3>Undo a merge</h3>
+                    </section>
+                    <section data-markdown>
+                        <textarea data-template>
+                            ```
+                            git reflog
+
+                            f03234f HEAD@{0}: merge test: Merge made by the 'recursive' strategy.
+                            dada69a HEAD@{1}: checkout: moving from test to master
+                            dada69a HEAD@{2}: commit: Add test
+                            25acf74 HEAD@{3}: checkout: moving from master to test
+                            ```
+
+                            ```
+                            git reset --hard HEAD@{1}
+                            ```
+                        </textarea>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h3>Copy a file from one branch to another</h3>
+                    </section>
+                    <section data-markdown>
+                        <textarea data-template>
+                            Copy test.py file from `test` branch into `master`
+                            ```
+                            git checkout master # To get into master branch
+
+                            git checkout test test.py
+                            ```
+                        </textarea>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h3>Display changes from a particular commit
+                    </section>
+                    <section data-markdown>
+                        <textarea data-template>
+                            ```
+                            git show <sha>
+                            ```
+                        </textarea>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h3>Rename the current branch</h3>
+                    </section>
+                    <section data-markdown>
+                        <textarea data-template>
+                            ```
+                            git checkout test # Checkout to the branch whose name you want to change.
+                            git branch -m <newname>
+                            ```
+                        </textarea>
+                    </section>
+                </section>
 			</div>
 		</div>
 
@@ -44,6 +180,7 @@
 			// - https://github.com/hakimel/reveal.js#configuration
 			// - https://github.com/hakimel/reveal.js#dependencies
 			Reveal.initialize({
+				margin: 0.1,
 				dependencies: [
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
