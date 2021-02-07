@@ -26,7 +26,8 @@ body {
 }
 
 .landing-illustration {
-  width: 35rem;
+  position: relative;
+  width: 90%;
 }
 
 li a {
